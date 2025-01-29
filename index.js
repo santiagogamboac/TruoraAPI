@@ -25,7 +25,8 @@ app.post('/decode', (req, res) => {
 
         // Decodificamos el token sin verificar la firma
         const decoded = jwt.decode(token);
-
+        console.log('Respuesta deserializada:', JSON.stringify(decoded, null, 2));
+        
         // Si el token no es válido, decoded será null
         if (!decoded) {
             return res.status(400).json({
@@ -34,7 +35,6 @@ app.post('/decode', (req, res) => {
             });
         }
 
-        // Devolvemos la información decodificada
         return res.json({
             status: true,
             decoded: {
