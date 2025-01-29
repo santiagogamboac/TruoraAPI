@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');  // Agregar CORS
-
+const { insertData } = require('./database');
 const app = express();
 const port = 3000;
 
@@ -10,7 +10,7 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(cors());  // Habilitar CORS para permitir solicitudes desde el navegador
 
-app.post('/decode', (req, res) => {
+app.post('/decode', async (req, res) => {
     try {
         const { token } = req.body;
 
@@ -29,6 +29,8 @@ app.post('/decode', (req, res) => {
                 status: false
             });
         }
+
+        await insertData(decoded)
 
         return res.json({
             status: true,
